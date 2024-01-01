@@ -1,0 +1,106 @@
+/* Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Globals */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: whitesmoke;
+}
+
+/* Utilities */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  display: block;
+  overflow: hidden;
+  height: 80px;
+  margin-bottom: 40px;
+  background-color: #333;
+}
+
+.branding {
+  width: auto;
+  height: 100%;
+  float: left;
+}
+
+.branding a {
+  height: 80px;
+  line-height: 80px;
+  color: white;
+}
+
+.nav {
+  width: auto;
+  float: right;
+}
+
+.nav__list {
+}
+
+.nav__item {
+  display: inline-block;
+}
+
+.nav__link {
+  color: white;
+  display: block;
+  height: 80px;
+  line-height: 80px;
+  padding: 0 16px;
+}
+
+.nav__link:hover {
+  color: #111;
+  font-weight: bold;
+  background-color: lightgray;
+}
+
+/* Section */
+section {
+  background-color: salmon;
+  padding: 16px 32px;
+}
+
+section:nth-of-type(2) {
+  color: white;
+  background-color: blue;
+}
+
+/* Footer */
+footer {
+  background-color: #2f2f2f;
+  color: white;
+  padding: 40px;
+}
