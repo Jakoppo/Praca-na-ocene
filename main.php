@@ -29,7 +29,7 @@ echo'
               <a class="nav__link" href="">.</a>
             </li>
             <li class="nav__item">
-              <a class="nav__link" href="">.</a>
+              <a class="nav__link" href="pages/edt.php">Tabela2</a>
             </li>
             <li class="nav__item">
               <a class="nav__link" href="pages/index.php">Tabela</a>

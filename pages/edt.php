@@ -10,18 +10,30 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Domyślne sortowanie po ID
-$order_by = isset($_GET['order_by']) ? $_GET['order_by'] : 'id';
-$order = isset($_GET['order']) ? $_GET['order'] : 'ASC';
+// Obsługa edycji danych
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit'])) {
+    $id = $_POST['edit'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $age = $_POST['age'];
+    $gender = $_POST['gender'];
+    $pesel = $_POST['pesel'];
 
-// Pobranie danych z bazy danych i sortowanie
-$sql = "SELECT * FROM `5` ORDER BY $order_by $order";
-$result = $conn->query($sql);
+    $sql_update = "UPDATE `5` SET Imie='$first_name', Nazwisko='$last_name', Wiek=$age, Plec='$gender', Pesel='$pesel' WHERE id=$id";
+
+    if ($conn->query($sql_update) === TRUE) {
+        echo "Dane zostały zaktualizowane pomyślnie";
+    } else {
+        echo "Błąd podczas aktualizacji danych: " . $conn->error;
+    }
+}
+
+$sql_select = "SELECT * FROM `5`";
+$result = $conn->query($sql_select);
 
 $conn->close();
 ?>
-<?php 
-echo'
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -49,7 +61,7 @@ echo'
               <a class="nav__link" href="">.</a>
             </li>
             <li class="nav__item">
-              <a class="nav__link" href="edt.php">Tabela</a>
+              <a class="nav__link" href="index.php">Tabela</a>
             </li>
             <li class="nav__item">
               <a class="nav__link" href="../main.php">Rejestracja</a>
@@ -68,6 +80,7 @@ echo'
     <main class="main">
       <div class="container">
         <section>
+    <body>
     <style>
         table {
             border-collapse: collapse;
@@ -79,28 +92,23 @@ echo'
             text-align: left;
             padding: 8px;
         }
-
-        th {
-            cursor: pointer;
-        }
     </style>
-</head>
-<body>
-    <h2>Sortowanie w tabeli</h2>
+    <h2>Edycja danych</h2>
     
     <table>
         <thead>
             <tr>
-                <th><a href="?order_by=id&order=<?= $order === "ASC" ? "DESC" : "ASC" ?>ID</a></th>
-                <th><a href="?order_by=Imie&order=<?= $order === "ASC" ? "DESC" : "ASC" ?>Imię</a></th>
-                <th><a href="?order_by=Nazwisko&order=<?= $order === "ASC" ? "DESC" : "ASC" ?>Nazwisko</a></th>
-                <th><a href="?order_by=Wiek&order=<?= $order === "ASC" ? "DESC" : "ASC" ?>Wiek</a></th>
-                <th><a href="?order_by=Plec&order=<?= $order === "ASC" ? "DESC" : "ASC" ?>Płeć</a></th>
-                <th><a href="?order_by=Pesel&order=<?= $order === "ASC" ? "DESC" : "ASC" ?>PESEL</a></th>
+                <th>ID</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Wiek</th>
+                <th>Płeć</th>
+                <th>PESEL</th>
+                <th>Akcje</th>
             </tr>
         </thead>
-        <tbody>';
-        
+        <tbody>
+            <?php
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     echo "<tr>";
@@ -110,12 +118,13 @@ echo'
                     echo "<td>" . $row["Wiek"] . "</td>";
                     echo "<td>" . $row["Plec"] . "</td>";
                     echo "<td>" . $row["Pesel"] . "</td>";
+                    echo "<td><a href='edit.php?id=" . $row["id"] . "'>Edytuj</a></td>";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='6'>Brak danych do wyświetlenia.</td></tr>";
+                echo "<tr><td colspan='7'>Brak danych do wyświetlenia.</td></tr>";
             }
-echo'
+            ?>
         </tbody>
     </table>
     </section>
@@ -125,5 +134,4 @@ echo'
       <div class="container">footer</div>
 </footer>
 </body>
-</html>';
-?>
+</html>
