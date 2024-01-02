@@ -25,11 +25,14 @@ echo'
 
         <nav class="nav">
           <ul class="nav__list">
-            <li class="nav__item">
-              <a class="nav__link" href="login.php">Logowanie</a>
+          <li class="nav__item">
+              <a class="nav__link" href="">.</a>
             </li>
             <li class="nav__item">
               <a class="nav__link" href="">.</a>
+            </li>
+            <li class="nav__item">
+              <a class="nav__link" href="pages/index.php">Tabela</a>
             </li>
             <li class="nav__item">
               <a class="nav__link" href="">.</a>
