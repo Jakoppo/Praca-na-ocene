@@ -107,6 +107,7 @@ echo'
                 <th><a href="?order_by=Wiek&order=<?= $order === "ASC" ? "DESC" : "ASC" ?>Wiek</a></th>
                 <th><a href="?order_by=Plec&order=<?= $order === "ASC" ? "DESC" : "ASC" ?>Płeć</a></th>
                 <th><a href="?order_by=Pesel&order=<?= $order === "ASC" ? "DESC" : "ASC" ?>PESEL</a></th>
+                <th><a href="?order_by=Pesel&order=<?= $order === "ASC" ? "DESC" : "ASC" ?>haslo</a></th>
             </tr>
         </thead>
         <tbody>';
@@ -120,6 +121,7 @@ echo'
                     echo "<td>" . $row["Wiek"] . "</td>";
                     echo "<td>" . $row["Plec"] . "</td>";
                     echo "<td>" . $row["Pesel"] . "</td>";
+                    echo "<td>" . $row["haslo"] . "</td>";
                     echo "</tr>";
                 }
             } else {
