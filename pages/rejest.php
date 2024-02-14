@@ -21,7 +21,7 @@ $last_name = $_POST['last_name'];
 $password = $_POST['password'];
 $confirm_password = $_POST['confirm_password'];
 
-
+ v   
 if ($password !== $confirm_password) {
     die("Hasła się nie zgadzają");
 }
