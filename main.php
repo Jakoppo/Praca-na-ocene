@@ -20,13 +20,13 @@ echo'
     <header class="header">
       <div class="container">
         <div class="branding">
-          <a href="/">My Website</a>
+          <a href="main.php">My Website</a>
         </div>
 
         <nav class="nav">
           <ul class="nav__list">
           <li class="nav__item">
-              <a class="nav__link" href="">.</a>
+              <a class="nav__link" href="pages/log in.php">log in</a>
             </li>
             <li class="nav__item">
               <a class="nav__link" href="pages/edt.php">Tabela2</a>

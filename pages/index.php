@@ -1,4 +1,5 @@
 <?php
+session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -19,6 +20,15 @@ $sql = "SELECT * FROM `5` ORDER BY $order_by $order";
 $result = $conn->query($sql);
 
 $conn->close();
+
+// Sprawdź, czy użytkownik jest zalogowany
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: log in.php");
+    exit;
+}
+
+// Reszta kodu dla strony chronionej logowaniem
+
 ?>
 <?php 
 echo'
@@ -118,6 +128,9 @@ echo'
 echo'
         </tbody>
     </table>
+    <form action="logout.php" method="post">
+        <input type="submit" value="Wyloguj">
+    </form>
     </section>
       </div>
     </main>
