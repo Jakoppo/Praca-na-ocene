@@ -1,60 +1,3 @@
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My World</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../css/style.css" />
-  </head>
-  <body>
-    <header class="header">
-      <div class="container">
-        <div class="branding">
-          <a href="../main.php">My Website</a>
-        </div>
-        <nav class="nav">
-          <ul class="nav__list">
-          <li class="nav__item">
-              <a class="nav__link" href="">.</a>
-            </li>
-            <li class="nav__item">
-              <a class="nav__link" href="index.php">Tabela</a>
-            </li>
-            <li class="nav__item">
-              <a class="nav__link" href="../main.php">Rejestracja</a>
-            </li>
-            <li class="nav__item">
-              <a class="nav__link" href="../logout.php">Logout</a>
-            </li>
-            <li class="nav__item">
-              <a class="nav__link" href="">.</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      
-    </header>
-    <main class="main">
-      <div class="container">
-        <section>
-        <h2>Logowanie</h2>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <label for="username">Nazwa użytkownika:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Hasło:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Zaloguj">
-    </form>
-</section>
-</div>
-</body>
-
 <?php
 session_start();
 $servername = "localhost";
@@ -64,17 +7,21 @@ $dbname = "baza";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 // Dane do logowania
 $valid_username = 'user123';
 $valid_password = 'password123';
 
 // Sprawdź, czy formularz został przesłany
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     // Pobierz dane z formularza
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Sprawdź, czy dane są poprawne
+    // Sprawdź, czy dane są poprawne (hardcoded credentials)
     if ($username === $valid_username && $password === $valid_password) {
         // Dane są poprawne - ustaw zmienną sesji
         $_SESSION['logged_in'] = true;
@@ -86,7 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Nieprawidłowa nazwa użytkownika lub hasło.";
     }
 }
-elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login_db'])) {
     // Pobierz dane z formularza
     $username = $_POST['imie'];
     $password = $_POST['haslo'];
@@ -115,3 +63,70 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My World</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="branding">
+                <a href="../main.php">My Website</a>
+            </div>
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a class="nav__link" href="">.</a>
+                    </li>
+                    <li class="nav__item">
+                        <a class="nav__link" href="index.php">Tabela</a>
+                    </li>
+                    <li class="nav__item">
+                        <a class="nav__link" href="../main.php">Rejestracja</a>
+                    </li>
+                    <li class="nav__item">
+                        <a class="nav__link" href="../logout.php">Logout</a>
+                    </li>
+                    <li class="nav__item">
+                        <a class="nav__link" href="">.</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="main">
+        <div class="container">
+            <section>
+                <h2>Logowanie</h2>
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <label for="username">Nazwa użytkownika:</label><br>
+                    <input type="text" id="username" name="username"><br>
+                    <label for="password">Hasło:</label><br>
+                    <input type="password" id="password" name="password"><br><br>
+                    <input type="submit" name="login" value="Zaloguj">
+                </form>
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <label for="imie">Nazwa użytkownika:</label><br>
+                    <input type="text" id="imie" name="imie"><br>
+                    <label for="haslo">Hasło:</label><br>
+                    <input type="password" id="haslo" name="haslo"><br><br>
+                    <input type="submit" name="login_db" value="Zaloguj z bazą danych">
+                </form>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">footer</div>
+    </footer>
+</body>
+</html>
